@@ -1,0 +1,3 @@
+/silk_libs/windows-shared-x64/lame.dll
+/silk_libs/windows-shared-x64/silk.dll
+
