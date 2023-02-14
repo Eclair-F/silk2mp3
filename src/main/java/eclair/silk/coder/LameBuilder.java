@@ -1,4 +1,4 @@
-package qw.silk;
+package eclair.silk.coder;
 
 
 public class LameBuilder {

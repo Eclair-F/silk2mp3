@@ -1,4 +1,7 @@
-package qw.silk;
+package eclair.silk.utils;
+
+import eclair.silk.coder.LameCoder;
+import eclair.silk.coder.SilkCoder;
 
 import java.io.*;
 

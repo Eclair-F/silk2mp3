@@ -1,4 +1,4 @@
-package qw.silk;
+package eclair.silk.utils;
 
 import java.io.*;
 import java.util.List;
@@ -6,9 +6,28 @@ import java.util.stream.Collectors;
 
 
 public class NativeLibLoader {
-
     public static void load() {
-        InputStream fileListInputStream = NativeLibLoader.class.getResourceAsStream("src/main/resources/silk_libs/filelist.txt");
+        try {
+            // 尝试直接加载
+            System.load((new File("")).getAbsolutePath() + "\\lame.dll");
+            System.load((new File("")).getAbsolutePath() + "\\silk.dll");
+        } catch (UnsatisfiedLinkError ignore) {
+
+            try {
+                System.loadLibrary("liblame");
+                System.loadLibrary("libsilk");
+            } catch (UnsatisfiedLinkError i) {
+                // 失败后
+                loadFromResources();
+            }
+        }
+
+
+    }
+
+    public static void loadFromResources() {
+        InputStream fileListInputStream = NativeLibLoader.class.getResourceAsStream("src/main/resources/silk_libs" +
+                "/filelist.txt");
         InputStreamReader inputStreamReader = new InputStreamReader(fileListInputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         List<String> fileList = bufferedReader.lines().collect(Collectors.toList());
@@ -19,7 +38,7 @@ public class NativeLibLoader {
                 return;
             }
             try {
-               System.load(NativeLibLoader.class.getResource(libFile).getPath());
+                System.load(NativeLibLoader.class.getResource(libFile).getPath());
                 successCount++;
             } catch (UnsatisfiedLinkError ignored) {
             }

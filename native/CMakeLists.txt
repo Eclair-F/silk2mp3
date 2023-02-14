@@ -22,7 +22,7 @@ ENDIF ()
 include_directories(../build/generated/sources/headers/java/main/)
 add_subdirectory(lame)
 
-
+#SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/../build/classes/java/main/io/github/mzdluo123/silk4j)
 
 AUX_SOURCE_DIRECTORY(src SRC_DIR)
 

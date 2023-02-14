@@ -1,4 +1,4 @@
-package qw.silk;
+package eclair.silk.coder;
 
 import java.io.*;
 
@@ -26,7 +26,7 @@ public class LameCoder {
         lameClose();
     }
 
-    public static void encode(String source, String dest, int bitrate) throws IOException {
+    public static void encode(String source, String dest, int bitrate) {
 
         LameCoder coder = new LameBuilder()
                 .setInSampleRate(bitrate)
@@ -39,7 +39,7 @@ public class LameCoder {
         coder.close();
     }
 
-    public static int decode(String source, String dest) throws IOException {
+    public static int decode(String source, String dest) {
 
         initDecoder();
         int bitrate = decodeFile(source, dest);

@@ -3,10 +3,10 @@
 //
 
 #include "coder.h"
-#include "qw_silk_SilkCoder.h"
+#include "eclair_silk_coder_SilkCoder.h"
 
 
-JNIEXPORT void JNICALL Java_qw_silk_SilkCoder_encode
+JNIEXPORT void JNICALL Java_eclair_silk_coder_SilkCoder_encode
         (JNIEnv *env, jclass cls, jstring source, jstring dest, jboolean tencent, jint fs_Hz,
          jint maxInternalSampleRate,
          jint packetSize,

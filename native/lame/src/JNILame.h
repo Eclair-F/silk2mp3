@@ -4,7 +4,7 @@
 
 #ifndef NATIVE_JNILAME_H
 #define NATIVE_JNILAME_H
-#include "qw_silk_LameCoder.h"
+#include "eclair_silk_coder_LameCoder.h"
 #include "lame.h"
 #include <jni.h>
 

@@ -25,13 +25,13 @@ int read_samples(FILE *input_file, short *input) {
     return nb_read;
 }
 
-JNIEXPORT void JNICALL Java_qw_silk_LameCoder_initializeDefault(
+JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_initializeDefault(
         JNIEnv *env, jclass cls) {
 
     glf = initializeDefault(env);
 }
 
-JNIEXPORT void JNICALL Java_qw_silk_LameCoder_initialize(
+JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_initialize(
         JNIEnv *env, jclass cls, jint inSamplerate, jint outChannel,
         jint outSamplerate, jint outBitrate, jfloat scaleInput, jint mode, jint vbrMode,
         jint quality, jint vbrQuality, jint abrMeanBitrate, jint lowpassFreq, jint highpassFreq,
@@ -63,12 +63,12 @@ JNIEXPORT void JNICALL Java_qw_silk_LameCoder_initialize(
 //    return flush(env, glf, mp3buf);
 //}
 
-JNIEXPORT void JNICALL Java_qw_silk_LameCoder_lameClose(
+JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_lameClose(
         JNIEnv *env, jclass cls) {
     close(glf);
 }
 
-JNIEXPORT void JNICALL Java_qw_silk_LameCoder_encodeFile
+JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_encodeFile
         (JNIEnv *env,
          jclass cls, jstring in_source_path, jstring in_target_path) {
 
@@ -225,17 +225,17 @@ lame_global_flags *initialize(
     return glf;
 }
 
-JNIEXPORT void JNICALL Java_qw_silk_LameCoder_initDecoder
+JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_initDecoder
         (JNIEnv *env, jclass cls) {
     hip = hip_decode_init();
 }
 
-JNIEXPORT void JNICALL Java_qw_silk_LameCoder_closeDecoder
+JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_closeDecoder
         (JNIEnv *env, jclass cls) {
     hip_decode_exit(hip);
 }
 
-JNIEXPORT jint JNICALL Java_qw_silk_LameCoder_decodeFile
+JNIEXPORT jint JNICALL Java_eclair_silk_coder_LameCoder_decodeFile
         (JNIEnv *env, jclass cls, jstring source, jstring dest) {
     const char *source_path, *target_path;
     mp3data_struct mp3data;
