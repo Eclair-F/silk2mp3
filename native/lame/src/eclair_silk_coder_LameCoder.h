@@ -39,30 +39,6 @@ JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_lameClose
 JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_encodeFile
   (JNIEnv *, jclass, jstring, jstring);
 
-/*
- * Class:     eclair_silk_coder_LameCoder
- * Method:    initDecoder
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_initDecoder
-  (JNIEnv *, jclass);
-
-/*
- * Class:     eclair_silk_coder_LameCoder
- * Method:    closeDecoder
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_closeDecoder
-  (JNIEnv *, jclass);
-
-/*
- * Class:     eclair_silk_coder_LameCoder
- * Method:    decodeFile
- * Signature: (Ljava/lang/String;Ljava/lang/String;)I
- */
-JNIEXPORT jint JNICALL Java_eclair_silk_coder_LameCoder_decodeFile
-  (JNIEnv *, jclass, jstring, jstring);
-
 #ifdef __cplusplus
 }
 #endif

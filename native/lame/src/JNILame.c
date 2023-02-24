@@ -9,7 +9,7 @@
 #define be_short(s) ((short) ((unsigned short) (s) << 8) | ((unsigned short) (s) >> 8))
 
 lame_global_flags *glf;
-hip_t hip;
+
 
 
 int read_samples(FILE *input_file, short *input) {
@@ -45,23 +45,7 @@ JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_initialize(
                      id3tagYear,
                      id3tagComment);
 }
-//
-//JNIEXPORT jint JNICALL Java_io_github_mzdluo123_silk4j_LameCoder_lameEncode(
-//        JNIEnv *env, jclass cls, jshortArray buffer_l,
-//        jshortArray buffer_r, jint samples, jbyteArray mp3buf) {
-//    return encode(env, glf, buffer_l, buffer_r, samples, mp3buf);
-//}
-//
-//JNIEXPORT jint JNICALL Java_io_github_mzdluo123_silk4j_LameCoder_encodeBufferInterleaved(
-//        JNIEnv *env, jclass cls, jshortArray pcm,
-//        jint samples, jbyteArray mp3buf) {
-//    return encodeBufferInterleaved(env, glf, pcm, samples, mp3buf);
-//}
-//
-//JNIEXPORT jint JNICALL Java_io_github_mzdluo123_silk4j_LameCoder_lameFlush(
-//        JNIEnv *env, jclass cls, jbyteArray mp3buf) {
-//    return flush(env, glf, mp3buf);
-//}
+
 
 JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_lameClose(
         JNIEnv *env, jclass cls) {
@@ -224,121 +208,6 @@ lame_global_flags *initialize(
 
     return glf;
 }
-
-JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_initDecoder
-        (JNIEnv *env, jclass cls) {
-    hip = hip_decode_init();
-}
-
-JNIEXPORT void JNICALL Java_eclair_silk_coder_LameCoder_closeDecoder
-        (JNIEnv *env, jclass cls) {
-    hip_decode_exit(hip);
-}
-
-JNIEXPORT jint JNICALL Java_eclair_silk_coder_LameCoder_decodeFile
-        (JNIEnv *env, jclass cls, jstring source, jstring dest) {
-    const char *source_path, *target_path;
-    mp3data_struct mp3data;
-    source_path = (*env)->GetStringUTFChars(env, source, NULL);
-    target_path = (*env)->GetStringUTFChars(env, dest, NULL);
-
-    FILE *input_file, *output_file;
-    input_file = fopen(source_path, "rb");
-    output_file = fopen(target_path, "wb");
-
-    unsigned char input[BUFFER_SIZE];
-    short output_l[BUFFER_SIZE * 20];
-    short output_r[BUFFER_SIZE * 20];
-    memset(output_l, 0, BUFFER_SIZE * 20);
-    memset(output_r, 0, BUFFER_SIZE * 20);
-    size_t nb_read = 0;
-    size_t nb_write = 0;
-    size_t total_size = 0;
-
-
-//	LOGD("Encoding started");
-
-    nb_read = fread(input, 1, BUFFER_SIZE, input_file);
-    while (nb_read) {
-//        nb_write = lame_encode_buffer(glf, input, input, nb_read, output,
-//                                      BUFFER_SIZE);
-        nb_write = hip_decode_headers(hip, input, nb_read, output_l, output_r, &mp3data);
-        total_size += nb_write;
-        fwrite(output_l, nb_write, sizeof(short), output_file);
-        nb_read = fread(input, 1, BUFFER_SIZE, input_file);
-    }
-
-    if (total_size == 0) {
-        memset(input, 0, BUFFER_SIZE);
-        nb_read = 10;
-        nb_write = hip_decode_headers(hip, input, nb_read, output_l, output_r, &mp3data);
-        fwrite(output_l, nb_write, sizeof(short), output_file);
-    }
-
-//	LOGD("Encoded %d bytes", nb_total);
-//
-//    nb_write = lame_encode_flush(glf, output_l, BUFFER_SIZE);
-//    fwrite(output_l, nb_write, 1, output_file);
-//	LOGD("Flushed %d bytes", nb_write);
-
-    fclose(input_file);
-    fclose(output_file);
-    return mp3data.samplerate;
-}
-
-
-//
-//jint encode(
-//        JNIEnv *env, lame_global_flags *glf,
-//        jshortArray buffer_l, jshortArray buffer_r,
-//        jint samples, jbyteArray mp3buf) {
-//    jshort *j_buffer_l = env->GetShortArrayElements(buffer_l, NULL);
-//
-//    jshort *j_buffer_r = env->GetShortArrayElements(buffer_r, NULL);
-//
-//    const jsize mp3buf_size = env->GetArrayLength(mp3buf);
-//    jbyte *j_mp3buf = env->GetByteArrayElements(mp3buf, NULL);
-//
-//    int result = lame_encode_buffer(glf, j_buffer_l,
-//                                    j_buffer_r,
-//                                    samples, reinterpret_cast<unsigned char *>(j_mp3buf), mp3buf_size);
-//
-//    env->ReleaseShortArrayElements(buffer_l, j_buffer_l, 0);
-//    env->ReleaseShortArrayElements(buffer_r, j_buffer_r, 0);
-//    env->ReleaseByteArrayElements(mp3buf, j_mp3buf, 0);
-//
-//    return result;
-//}
-//
-//jint encodeBufferInterleaved(
-//        JNIEnv *env, lame_global_flags *glf,
-//        jshortArray pcm, jint samples, jbyteArray mp3buf) {
-//    jshort *j_pcm = env->GetShortArrayElements(pcm, NULL);
-//
-//    const jsize mp3buf_size = env->GetArrayLength(mp3buf);
-//    jbyte *j_mp3buf = env->GetByteArrayElements(mp3buf, NULL);
-//
-//    int result = lame_encode_buffer_interleaved(glf, j_pcm,
-//                                                samples, reinterpret_cast<unsigned char *>(j_mp3buf), mp3buf_size);
-//
-//    env->ReleaseShortArrayElements(pcm, j_pcm, 0);
-//    env->ReleaseByteArrayElements(mp3buf, j_mp3buf, 0);
-//
-//    return result;
-//}
-//
-//jint flush(
-//        JNIEnv *env, lame_global_flags *glf,
-//        jbyteArray mp3buf) {
-//    const jsize mp3buf_size = env->GetArrayLength(mp3buf);
-//    jbyte *j_mp3buf = env->GetByteArrayElements(mp3buf, NULL);
-//
-//    int result = lame_encode_flush(glf, reinterpret_cast<unsigned char *>(j_mp3buf), mp3buf_size);
-//
-//    env->ReleaseByteArrayElements(mp3buf, j_mp3buf, 0);
-//
-//    return result;
-//}
 
 void close(
         lame_global_flags *glf) {

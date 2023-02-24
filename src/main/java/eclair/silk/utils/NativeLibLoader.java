@@ -11,6 +11,7 @@ public class NativeLibLoader {
             // 尝试直接加载
             System.load((new File("")).getAbsolutePath() + "\\lame.dll");
             System.load((new File("")).getAbsolutePath() + "\\silk.dll");
+            System.load((new File("")).getAbsolutePath() + "\\mp3.dll");
         } catch (UnsatisfiedLinkError ignore) {
 
             try {

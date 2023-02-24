@@ -10,7 +10,7 @@ public class SilkCoder {
     }
 
 
-    public static native void encode(String source,
+    private static native void encode(String source,
                                      String dest,
                                      boolean tencent,
                                      int fs_Hz,

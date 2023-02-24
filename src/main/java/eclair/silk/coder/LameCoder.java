@@ -39,13 +39,7 @@ public class LameCoder {
         coder.close();
     }
 
-    public static int decode(String source, String dest) {
 
-        initDecoder();
-        int bitrate = decodeFile(source, dest);
-        closeDecoder();
-        return bitrate;
-    }
 
     private static native void initializeDefault();
 
@@ -61,11 +55,7 @@ public class LameCoder {
 
     private native static void encodeFile(String source, String dest);
 
-    private native static void initDecoder();
 
-    private native static void closeDecoder();
-
-    private native static int decodeFile(String source, String dest);
 
 
     private static int getIntForMode(LameBuilder.Mode mode) {

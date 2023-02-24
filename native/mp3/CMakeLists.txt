@@ -1,0 +1,1 @@
+add_library(mp3 SHARED ${MP3_SRC_DIR} JNIMp3.h JNIMp3.c  minimp3.h )
