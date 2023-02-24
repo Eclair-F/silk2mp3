@@ -18,7 +18,7 @@
 #include "minimp3.h"
 #include <sys/stat.h>
 
-void pcmWrite_int16(char*, int16_t*, int, uint32_t, int);
+void pcmWrite_int16(char*, int16_t*,  uint32_t);
 void wavWrite_int16(char*, int16_t*, int, uint32_t, int);
 void stereo_2_mono(const int16_t* , int , int16_t* );
 void resampleData(const int16_t* , int32_t , uint32_t , int16_t* ,int32_t );
