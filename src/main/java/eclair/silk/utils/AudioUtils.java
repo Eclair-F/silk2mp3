@@ -39,9 +39,8 @@ public class AudioUtils {
         File pcmFile = getTempFile("pcm");
         File silkFile = getTempFile("silk");
         int sampleRate = MP3Coder.decode(mp3File.getAbsolutePath(), pcmFile.getAbsolutePath(),1,24000);
-        System.out.println("MP3Coder success");
-        SilkCoder.encode(pcmFile.getAbsolutePath(), silkFile.getAbsolutePath(), sampleRate, bitRate);
-//        pcmFile.delete();
+              SilkCoder.encode(pcmFile.getAbsolutePath(), silkFile.getAbsolutePath(), sampleRate, bitRate);
+        pcmFile.delete();
         return silkFile;
     }
 
